@@ -17,6 +17,7 @@ import pojo.Location;
 import resources.TestDataBuild;
 import resources.Utils;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;
@@ -30,16 +31,15 @@ public class stepDef extends Utils {
     TestDataBuild data = new TestDataBuild();
 
     @Given("Add Place Payload")
-    public void add_place_payload() {
+    public void add_place_payload() throws FileNotFoundException {
         // Write code here that turns the phrase above into concrete actions
-        resSpec = new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
-
         res = given().spec(requestSpecification())
                 .body(data.addPlacePayLoad());
     }
     @When("User calls {string} with POST http request")
     public void user_calls_with_post_http_request(String string) {
         // Write code here that turns the phrase above into concrete actions
+        resSpec = new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
         response = res.when().post("/maps/api/place/add/json")
                 .then().spec(resSpec).extract().response();
     }
