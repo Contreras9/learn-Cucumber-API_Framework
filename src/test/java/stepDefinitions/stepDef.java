@@ -14,6 +14,8 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import pojo.AddPlace;
 import pojo.Location;
+import resources.TestDataBuild;
+import resources.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,40 +23,19 @@ import static org.junit.Assert.*;
 
 import static io.restassured.RestAssured.given;
 
-public class stepDef {
+public class stepDef extends Utils {
     RequestSpecification res;
     ResponseSpecification resSpec;
     Response response;
+    TestDataBuild data = new TestDataBuild();
 
     @Given("Add Place Payload")
     public void add_place_payload() {
         // Write code here that turns the phrase above into concrete actions
-        RestAssured.baseURI = "https://rahulshettyacademy.com";
-
-        AddPlace place = new AddPlace();
-
-        Location l = new Location();
-        l.setLat(-38.383494);
-        l.setLng(33.427362);
-        place.setLocation(l);
-        place.setAccuracy(50);
-        place.setName("Frontline house");
-        place.setPhone_number("(+91) 983 893 3937");
-        place.setAddress("29, side layout, cohen 09");
-        List<String> myList = new ArrayList<>();
-        myList.add("shoe park");
-        myList.add("shop");
-        place.setTypes(myList);
-        place.setWebsite("https://rahulshettyacademy.com");
-        place.setLanguage("French-IN");
-
-        RequestSpecification req = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com").addQueryParam("key", "qaclick123")
-                .setContentType(ContentType.JSON).build();
-
         resSpec = new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
 
-        res = given().spec(req)
-                .body(place);
+        res = given().spec(requestSpecification())
+                .body(data.addPlacePayLoad());
     }
     @When("User calls {string} with POST http request")
     public void user_calls_with_post_http_request(String string) {
