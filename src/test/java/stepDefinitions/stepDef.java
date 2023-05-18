@@ -18,6 +18,7 @@ import resources.TestDataBuild;
 import resources.Utils;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;
@@ -31,7 +32,7 @@ public class stepDef extends Utils {
     TestDataBuild data = new TestDataBuild();
 
     @Given("Add Place Payload")
-    public void add_place_payload() throws FileNotFoundException {
+    public void add_place_payload() throws IOException {
         // Write code here that turns the phrase above into concrete actions
         res = given().spec(requestSpecification())
                 .body(data.addPlacePayLoad());
